@@ -54,7 +54,7 @@ This project uses [uv](https://github.com/astral-sh/uv) for fast dependency mana
     Bash
     
     ```
-    git clone [https://github.com/blazyng/bye-chat-linux.git](https://github.com/blazyng/bye-chat-linux.git)
+    git clone https://github.com/blazyng/bye-chat-linux.git
     cd bye-chat
     ```
     
