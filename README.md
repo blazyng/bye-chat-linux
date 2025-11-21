@@ -27,9 +27,7 @@ sudo pacman -S v4l2loopback-dkms v4l2loopback-utils
 
 ### Debian / Ubuntu / TuxedoOS
 
-Bash
-
-```
+```Bash
 sudo apt install v4l2loopback-dkms v4l2loopback-utils
 ```
 
@@ -37,9 +35,7 @@ sudo apt install v4l2loopback-dkms v4l2loopback-utils
 
 Before running the app, load the kernel module (creates `/dev/video20`):
 
-Bash
-
-```
+```Bash
 sudo modprobe v4l2loopback devices=1 video_nr=20 card_label="ByeChatCam" exclusive_caps=1
 ```
 
@@ -51,26 +47,20 @@ This project uses [uv](https://github.com/astral-sh/uv) for fast dependency mana
 
 1. **Clone the repository**
     
-    Bash
-    
-    ```
+    ```bash
     git clone https://github.com/blazyng/bye-chat-linux.git
     cd bye-chat
     ```
     
 2. **Install dependencies & Run**
     
-    Bash
-    
-    ```
+    ```Bash
     uv run main.py
     ```
     
     _Alternatively, using standard pip:_
     
-    Bash
-    
-    ```
+    ```Bash
     pip install -r requirements.txt
     python main.py
     ```
