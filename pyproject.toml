@@ -1,0 +1,14 @@
+[project]
+name = "camedit"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "customtkinter>=5.2.2",
+    "mediapipe>=0.10.21",
+    "numpy>=1.26.4",
+    "opencv-python>=4.11.0.86",
+    "pillow>=12.0.0",
+    "pyvirtualcam>=0.14.0",
+]
