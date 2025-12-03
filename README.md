@@ -89,9 +89,32 @@ This project uses [uv](https://github.com/astral-sh/uv) for fast dependency mana
 
 ## 🔧 Troubleshooting
 
-- **"Device /dev/video20 does not exist":** Make sure you ran the `sudo modprobe` command listed in Prerequisites.
-    
-- **Discord shows a black screen:** Ensure the app is running and "Start Camera" is active _before_ you open Discord's video settings.
-    
-- **Flickering GUI:** The app uses a threaded GUI update loop. If it flickers, your system might be under heavy load, but the stream to Discord should remain smooth.
+### **1. "Device /dev/video20 does not exist"**
+
+**Cause:** The `v4l2loopback` kernel module was not loaded.
+
+**Solution:** Make sure you ran the `sudo modprobe` command listed in **Prerequisites**.
+
+### **2. Camera Index Error ("Cannot open Camera 0")**
+
+**Cause:** The default `CAMERA_INDEX = 0` is your integrated webcam, but your USB camera (like C920) is on a different index (e.g., `/dev/video2`).
+
+**Solution:** Edit the `main.py` file and change the index to match your USB camera:
+
+```
+# main.py, line 10
+CAMERA_INDEX = 2 # Change 0 to your camera index (e.g., 1 or 2)
+
+```
+
+### **3. Virtual Cam Not Visible in Chrome/Teams**
+
+**Cause:** Chromium-based applications (Google Meet, MS Teams, Chrome) often ignore virtual cameras unless they are actively sending a stream and advertise their capabilities correctly. This is usually caused by the `exclusive_caps=1` parameter conflicting with the `pyvirtualcam` library's setup sequence.
+
+|Solution|Description|Command|
+|---|---|---|
+|**A. Temporary Solution (Recommended)**|Reloads the kernel module with the `exclusive_caps=1` parameter to force Teams to recognize the active virtual camera.|`sudo modprobe -r v4l2loopback && sudo modprobe v4l2loopback devices=1 video_nr=20 card_label="ByeChatCam" exclusive_caps=1`|
+|**B. Permanent Solution**|Creates a configuration file so that the module is loaded with the correct parameters on every reboot.|**1. Create File:** `sudo nano /etc/modprobe.d/v4l2loopback.conf`<br><br>**2. Add the following line:** `options v4l2loopback devices=1 video_nr=20 card_label="ByeChatCam" exclusive_caps=1`|
+
+_**Important:**_ After executing Solution A (or after a system reboot for Solution B), you must start the "Bye Chat" app and click "Start Camera" before opening Teams/Chrome or accessing the video settings in Teams/Chrome.
     
